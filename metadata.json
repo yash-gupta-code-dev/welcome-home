@@ -1,0 +1,6 @@
+{
+  "name": "Welcome Home",
+  "description": "An interactive, cozy birthday experience from Rashi to Yash filled with custom rooms, warm music, engineering coding logs, and hidden memories.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
