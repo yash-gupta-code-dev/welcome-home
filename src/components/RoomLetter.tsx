@@ -45,7 +45,7 @@ export default function RoomLetter({ onBackToMap }: RoomLetterProps) {
       </div>
 
       {/* Parchment Letter Body */}
-      <div className="bg-[#fcf8f0] text-stone-900 border-4 border-amber-900/25 shadow-2xl rounded-3xl p-8 md:p-12 flex-grow flex flex-col justify-between relative overflow-hidden">
+      <div className="bg-[#fcf8f0] text-stone-900 border-4 border-[#BDA6CE] shadow-2xl rounded-3xl p-8 md:p-12 flex-grow flex flex-col justify-between relative overflow-hidden">
         
         {/* Soft Background Watermark */}
         <div className="absolute inset-0 bg-radial-gradient from-amber-100/30 to-transparent pointer-events-none" />

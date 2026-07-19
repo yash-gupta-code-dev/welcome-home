@@ -44,7 +44,7 @@ const POLAROIDS: PolaroidPhoto[] = [
     imagePlaceholder: 'bg-gradient-to-tr from-yellow-300 to-orange-400',
     emoji: '🍳',
     date: 'Spring 2025',
-    description: "Helping your mom at her food stall business! We tried to make a giant batch of her special rolls, but we accidentally spilled the batter everywhere, making your sister Pragati laugh so hard she dropped her diagnostics books!",
+    description: "Helping your mom at her food stall business! We tried to make a giant batch of her special rolls, but we accidentally spilled the batter everywhere, making your sister Priya laugh so hard she dropped her diagnostics books!",
   },
   {
     id: '5',
@@ -90,10 +90,74 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
       </div>
 
       {/* Gallery Wall Box */}
-      <div className="bg-slate-900/75 border border-slate-800 rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-between">
+      <div className="bg-slate-900/75 border border-slate-800 rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-between relative overflow-hidden">
         
+        {/* Subtle gallery background wall panels */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
+
+        {/* 1. WALL MOUNTED GALLERY SPOTLIGHT RAIL */}
+        <div className="absolute top-2 inset-x-12 h-1 bg-zinc-800 shadow-lg pointer-events-none z-0">
+          <div className="absolute top-1 left-1/4 w-2 h-2 bg-slate-500 rounded-full shadow-[0_0_15px_6px_rgba(34,211,238,0.3)]" />
+          <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-500 rounded-full shadow-[0_0_15px_6px_rgba(34,211,238,0.3)]" />
+          <div className="absolute top-1 right-1/4 w-2 h-2 bg-slate-500 rounded-full shadow-[0_0_15px_6px_rgba(34,211,238,0.3)]" />
+        </div>
+
+        {/* 2. POTTED EXOTIC PALMS (Corners) */}
+        <div className="absolute bottom-4 left-6 flex flex-col items-center pointer-events-auto z-10 select-none group" title="Gallery Parlor Palm">
+          <div className="flex flex-col items-center relative h-12 w-14">
+            <motion.span animate={{ rotate: [-1, 2, -1] }} transition={{ repeat: Infinity, duration: 5 }} className="text-4xl absolute -top-4">🌴</motion.span>
+            <motion.span animate={{ rotate: [2, -2, 2] }} transition={{ repeat: Infinity, duration: 4 }} className="text-3xl absolute -top-2 -left-2">🌿</motion.span>
+          </div>
+          <div className="w-9 h-9 bg-gradient-to-b from-stone-700 to-stone-900 border border-stone-600 rounded-b-lg shadow-md flex items-center justify-center font-mono text-[6px] text-stone-300">
+            STONE
+          </div>
+        </div>
+
+        <div className="absolute bottom-4 right-6 flex flex-col items-center pointer-events-auto z-10 select-none group" title="Gallery Parlor Palm">
+          <div className="flex flex-col items-center relative h-12 w-14">
+            <motion.span animate={{ rotate: [1, -2, 1] }} transition={{ repeat: Infinity, duration: 4.5 }} className="text-4xl absolute -top-4">🌴</motion.span>
+            <motion.span animate={{ rotate: [-2, 2, -2] }} transition={{ repeat: Infinity, duration: 3.5 }} className="text-3xl absolute -top-2 -right-2">🌿</motion.span>
+          </div>
+          <div className="w-9 h-9 bg-gradient-to-b from-stone-700 to-stone-900 border border-stone-600 rounded-b-lg shadow-md flex items-center justify-center font-mono text-[6px] text-stone-300">
+            STONE
+          </div>
+        </div>
+
+        {/* 3. COZY LEATHER VIEWING SOFA BENCH (Bottom Center) */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-48 h-12 bg-[#1c1212]/90 border-2 border-[#2c1d1d] rounded-xl p-1 flex flex-col justify-between shadow-2xl pointer-events-auto hover:brightness-110 transition z-10" title="Museum Tufted Velvet Bench">
+          <div className="flex gap-1 h-3 justify-between">
+            <div className="flex-grow bg-[#382222] rounded-md shadow-inner" />
+            <div className="flex-grow bg-[#382222] rounded-md shadow-inner" />
+            <div className="flex-grow bg-[#382222] rounded-md shadow-md" />
+          </div>
+          <div className="h-4 bg-[#261616] rounded border-t border-[#402929] shadow-inner flex items-center justify-center font-serif text-[7px] text-[#cca3a3] tracking-widest font-bold">
+            LOUNGE
+          </div>
+          <div className="flex justify-between px-3 -mb-1">
+            <div className="w-1 h-1.5 bg-neutral-900 rounded-sm" />
+            <div className="w-1 h-1.5 bg-neutral-900 rounded-sm" />
+          </div>
+        </div>
+
+        {/* 4. ANTIQUE ART EASEL WITH MOUNTED FRAMES */}
+        <div className="absolute bottom-2 left-24 flex flex-col items-center pointer-events-auto z-10 select-none hidden md:flex" title="Museum Easel Stand">
+          {/* Framed Masterpiece */}
+          <div className="w-16 h-14 bg-amber-950 border-2 border-amber-800 rounded p-1 shadow-xl flex items-center justify-center hover:scale-105 transition">
+            <div className="w-full h-full bg-[#faf5ec] border border-amber-900/20 flex flex-col items-center justify-center">
+              <span className="text-lg">🗼</span>
+              <span className="text-[4px] text-amber-950 font-serif leading-none mt-0.5">Paris Voyage</span>
+            </div>
+          </div>
+          {/* Easel Frame Legs */}
+          <div className="w-1 h-10 bg-amber-950 shadow" />
+          <div className="flex gap-8 -mt-2">
+            <div className="w-1 h-6 bg-amber-950 shadow rotate-[-15deg]" />
+            <div className="w-1 h-6 bg-amber-950 shadow rotate-[15deg]" />
+          </div>
+        </div>
+
         {/* Intro */}
-        <div className="text-center max-w-lg mx-auto space-y-2 mb-8">
+        <div className="text-center max-w-lg mx-auto space-y-2 mb-8 z-10">
           <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-2 justify-center">
             <Camera className="w-6 h-6 text-cyan-400" />
             The Polaroid Photo Wall

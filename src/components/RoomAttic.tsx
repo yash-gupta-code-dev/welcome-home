@@ -100,13 +100,76 @@ export default function RoomAttic({
       </div>
 
       {/* Main Container */}
-      <div className="bg-slate-900/75 border border-slate-800 rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-center relative">
+      <div className="bg-slate-950/80 border-2 border-[#BDA6CE] rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-center relative overflow-hidden shadow-[0_0_25px_rgba(155,142,199,0.15)]">
         
+        {/* 1. DUSTY ANTIQUE TRUNKS & STORAGE CHESTS (Left side background) */}
+        <div className="absolute bottom-4 left-6 flex flex-col gap-1.5 pointer-events-auto select-none group z-0 hidden lg:flex" title="Dusty Vault Trunks">
+          {/* Top small chest */}
+          <div className="w-16 h-10 bg-[#9B8EC7]/10 border-2 border-[#BDA6CE] rounded-md p-1 flex flex-col justify-between shadow-lg hover:scale-105 transition">
+            <div className="h-1 bg-[#BDA6CE]/40 w-full rounded" />
+            {/* brass latch */}
+            <div className="w-2 h-3 bg-[#B4D2D9] rounded mx-auto" />
+            <div className="text-[6px] text-[#F2EAE0] text-center uppercase tracking-tighter">MAPS</div>
+          </div>
+          {/* Large bottom flat trunk */}
+          <div className="w-24 h-14 bg-slate-950/90 border-2 border-[#BDA6CE] rounded-lg p-1.5 flex flex-col justify-between shadow-xl relative hover:brightness-110 transition">
+            <div className="absolute top-3 inset-x-1 h-1 bg-[#9B8EC7]/30" />
+            {/* steel buckles */}
+            <div className="flex justify-around">
+              <div className="w-1.5 h-4 bg-[#B4D2D9] rounded-sm" />
+              <div className="w-1.5 h-4 bg-[#B4D2D9] rounded-sm" />
+            </div>
+            <div className="text-[7px] text-[#BDA6CE] font-mono text-center">MEMORIES</div>
+          </div>
+          <div className="text-[7px] text-[#B4D2D9] font-mono text-center">Vault Storage</div>
+        </div>
+
+        {/* 2. RUSTIC GRANDFATHER WARDROBE (Right side background) */}
+        <div className="absolute bottom-4 right-6 w-24 h-52 bg-[#9B8EC7]/10 border-2 border-[#BDA6CE] rounded-xl p-2 flex flex-col justify-between shadow-2xl pointer-events-auto hover:border-[#F2EAE0] transition duration-300 z-0 hidden lg:flex" title="Old Grand Wardrobe">
+          <div className="text-[7px] text-[#B4D2D9] font-bold uppercase tracking-wider text-center border-b border-[#BDA6CE]/20 pb-1">Wardrobe</div>
+          {/* Double doors with panels */}
+          <div className="flex-grow flex gap-2 border border-[#BDA6CE]/20 bg-[#9B8EC7]/10 rounded p-1.5 relative">
+            <div className="flex-grow border border-[#BDA6CE]/20 rounded flex items-center justify-end pr-0.5">
+              <div className="w-1.5 h-4 bg-[#B4D2D9] rounded-sm shadow" />
+            </div>
+            <div className="flex-grow border border-[#BDA6CE]/20 rounded flex items-center justify-start pl-0.5">
+              <div className="w-1.5 h-4 bg-[#B4D2D9] rounded-sm shadow" />
+            </div>
+          </div>
+          <div className="text-[6px] text-[#F2EAE0]/60 text-center font-serif">Vintage Keepsakes</div>
+        </div>
+
+        {/* 3. COZY WOODEN ROCKING CHAIR (Left foreground) */}
+        <div className="absolute bottom-4 left-32 flex flex-col items-center pointer-events-auto z-10 select-none group hidden xl:flex" title="Attic Storytelling Rocker">
+          {/* Backrest slats */}
+          <div className="w-10 h-10 border-x border-t border-[#BDA6CE] flex justify-around p-1">
+            <div className="w-0.5 h-full bg-[#BDA6CE]" />
+            <div className="w-0.5 h-full bg-[#BDA6CE]" />
+            <div className="w-0.5 h-full bg-[#BDA6CE]" />
+          </div>
+          {/* Cushion */}
+          <div className="w-12 h-2.5 bg-[#9B8EC7] rounded-full border border-[#BDA6CE] shadow" />
+          {/* Curved rocker runners */}
+          <div className="w-14 h-2 bg-transparent border-b-2 border-[#BDA6CE] rounded-b-full -mt-0.5 shadow-sm" />
+        </div>
+
+        {/* 4. ROUND HELPER TABLE (Right foreground) */}
+        <div className="absolute bottom-4 right-32 flex flex-col items-center pointer-events-auto z-10 select-none group hidden xl:flex" title="Round Utility Stand">
+          {/* Top panel with vintage candlestick */}
+          <div className="w-14 h-2 bg-[#9B8EC7] border border-[#BDA6CE] rounded-full shadow-md flex items-center justify-center relative">
+            <span className="absolute -top-4 text-xs">🕯️</span>
+          </div>
+          {/* Turned Leg pedestal */}
+          <div className="w-1.5 h-12 bg-[#211c34] shadow" />
+          {/* Tri-leg base */}
+          <div className="w-10 h-1 bg-[#211c34] rounded-full" />
+        </div>
+
         {/* Floating hanging fairy lights */}
         <div className="absolute top-0 inset-x-12 h-6 flex justify-between select-none opacity-60">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="flex flex-col items-center">
-              <div className="w-0.5 h-3 bg-slate-700" />
+              <div className="w-0.5 h-3 bg-[#BDA6CE]" />
               <div className="w-2 h-2 rounded-full bg-yellow-200 animate-pulse shadow-[0_0_8px_#fef08a]" style={{ animationDelay: `${i * 0.3}s` }} />
             </div>
           ))}
@@ -353,13 +416,15 @@ export default function RoomAttic({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            onClick={() => setShowCertificate(false)}
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"
           >
             <motion.div
               initial={{ scale: 0.95, rotate: -0.5 }}
               animate={{ scale: 1, rotate: 0 }}
               exit={{ scale: 0.95, rotate: 0.5 }}
-              className="bg-[#fcfaf4] text-amber-950 border-8 border-double border-amber-900 shadow-2xl rounded-3xl p-8 max-w-xl w-full text-center flex flex-col justify-between max-h-[85vh] overflow-y-auto font-serif"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#fcfaf4] text-amber-950 border-8 border-double border-amber-900 shadow-2xl rounded-3xl p-8 max-w-xl w-full text-center flex flex-col justify-between max-h-[82vh] overflow-y-auto font-serif"
               id="certificateModal"
             >
               {/* Close Button Header */}

@@ -56,7 +56,7 @@ export default function BackgroundStars() {
     const initStars = () => {
       stars = [];
       const starCount = Math.floor((canvas.width * canvas.height) / 4000);
-      const starColors = ['#ffffff', '#fff3e0', '#e3f2fd', '#f3e5f5'];
+      const starColors = ['#F2EAE0', '#B4D2D9', '#BDA6CE', '#9B8EC7', '#ffffff'];
 
       for (let i = 0; i < starCount; i++) {
         stars.push({
@@ -87,7 +87,7 @@ export default function BackgroundStars() {
     const updateAndDraw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Create a subtle cosmic background gradient
+      // Create a subtle cosmic background gradient in a soft pastel palette using Yash's new colors
       const gradient = ctx.createRadialGradient(
         canvas.width / 2,
         canvas.height / 2,
@@ -96,13 +96,14 @@ export default function BackgroundStars() {
         canvas.height / 2,
         canvas.width * 0.8
       );
-      gradient.addColorStop(0, '#0c1328');
-      gradient.addColorStop(0.5, '#070b16');
-      gradient.addColorStop(1, '#03050a');
+      gradient.addColorStop(0, '#F2EAE0'); // Primary warm cream
+      gradient.addColorStop(0.4, '#B4D2D9'); // Secondary pastel blue-teal
+      gradient.addColorStop(0.8, '#BDA6CE'); // Supporting 1 lavender
+      gradient.addColorStop(1, '#9B8EC7'); // Supporting 2 purple
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw normal stars
+      // Draw normal stars as colorful magical dust
       stars.forEach((star) => {
         // Twinkle update
         star.alpha += star.twinkleSpeed * star.alphaDirection;
@@ -115,7 +116,7 @@ export default function BackgroundStars() {
         }
 
         // Slow drift downwards
-        star.y += 0.05;
+        star.y += 0.04;
         if (star.y > canvas.height) {
           star.y = 0;
           star.x = Math.random() * canvas.width;
@@ -124,7 +125,7 @@ export default function BackgroundStars() {
         ctx.save();
         ctx.globalAlpha = star.alpha;
         ctx.fillStyle = star.color;
-        ctx.shadowBlur = star.size * 3;
+        ctx.shadowBlur = star.size * 2;
         ctx.shadowColor = star.color;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
@@ -135,10 +136,10 @@ export default function BackgroundStars() {
       // Handle shooting star
       if (shootingStar.active) {
         ctx.save();
-        ctx.strokeStyle = `rgba(255, 255, 255, ${shootingStar.opacity})`;
-        ctx.lineWidth = 1.5;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#ffffff';
+        ctx.strokeStyle = `rgba(155, 142, 199, ${shootingStar.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#BDA6CE';
         ctx.beginPath();
         ctx.moveTo(shootingStar.x, shootingStar.y);
         
@@ -153,8 +154,8 @@ export default function BackgroundStars() {
           endX,
           endY
         );
-        starGrad.addColorStop(0, `rgba(255, 255, 255, ${shootingStar.opacity})`);
-        starGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        starGrad.addColorStop(0, `rgba(189, 166, 206, ${shootingStar.opacity})`);
+        starGrad.addColorStop(1, 'rgba(189, 166, 206, 0)');
         ctx.strokeStyle = starGrad;
 
         ctx.lineTo(endX, endY);

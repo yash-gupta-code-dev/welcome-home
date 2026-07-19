@@ -140,10 +140,90 @@ export default function RoomGarden({
       </div>
 
       {/* Garden Board */}
-      <div className="bg-slate-900/75 border border-slate-800 rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-between relative overflow-hidden">
+      <div className="bg-slate-950/80 border-2 border-[#BDA6CE] rounded-3xl p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-between relative overflow-hidden shadow-[0_0_25px_rgba(155,142,199,0.15)]">
         
         {/* Crescent Moon */}
         <div className="absolute top-6 right-8 w-16 h-16 bg-transparent rounded-full shadow-[-12px_12px_0_0_#fef08a] filter drop-shadow-[0_0_15px_rgba(254,240,138,0.3)] animate-pulse pointer-events-none" />
+
+        {/* 1. SWINGING HOVERABLE WIND CHIMES (Top Left) */}
+        <div className="absolute top-4 left-6 pointer-events-auto select-none group z-10" title="Cozy Garden Wind Chimes">
+          <motion.div 
+            whileHover={{ rotate: [-8, 8, -6, 6, 0], transition: { duration: 1.5, ease: "easeInOut" } }}
+            className="flex flex-col items-center cursor-pointer"
+            onClick={() => audioEngine.playChime()}
+          >
+            {/* Hanging String */}
+            <div className="w-0.5 h-6 bg-[#BDA6CE]" />
+            {/* Wooden top disc */}
+            <div className="w-8 h-1.5 bg-[#9B8EC7] rounded-full" />
+            {/* Chime Tubes */}
+            <div className="flex gap-1 items-start -mt-0.5">
+              <div className="w-1 h-8 bg-[#B4D2D9] rounded-b shadow" />
+              <div className="w-1 h-10 bg-[#BDA6CE] rounded-b shadow" />
+              <div className="w-1 h-9 bg-[#B4D2D9] rounded-b shadow" />
+              <div className="w-1 h-7 bg-[#BDA6CE] rounded-b shadow" />
+            </div>
+            {/* Wooden sail clapper */}
+            <div className="w-2.5 h-4 bg-[#B4D2D9] rounded-b-md mt-0.5 shadow animate-pulse" />
+          </motion.div>
+        </div>
+
+        {/* 2. RUSTIC WOODEN BIRDHOUSE (Middle Right) */}
+        <div className="absolute top-24 right-6 flex flex-col items-center pointer-events-auto z-10 select-none group hidden sm:flex" title="Chirpy Bird Sanctuary">
+          {/* Birdhouse Roof */}
+          <div className="w-10 h-6 bg-[#9B8EC7] rotate-45 border-t border-l border-[#BDA6CE] origin-bottom-right shadow-md" />
+          {/* Birdhouse Box */}
+          <div className="w-8 h-8 bg-[#BDA6CE] border-x border-b border-[#9B8EC7] rounded-b flex flex-col items-center justify-around p-1 -mt-4 relative shadow-lg">
+            {/* Entrance Hole */}
+            <div className="w-3 h-3 bg-zinc-950 rounded-full flex items-center justify-center">
+              <span className="text-[7px] leading-none animate-pulse">🐦</span>
+            </div>
+            {/* Little perch stick */}
+            <div className="w-4 h-0.5 bg-[#211c34]" />
+          </div>
+          {/* Standing Pole */}
+          <div className="w-1.5 h-16 bg-[#211c34] shadow-md" />
+        </div>
+
+        {/* 3. COZY PATIO WOODEN GARDEN BENCH (Bottom Left Corner) */}
+        <div className="absolute bottom-24 left-4 w-32 h-16 bg-[#9B8EC7]/10 border-2 border-[#BDA6CE] rounded-xl p-1.5 flex flex-col justify-between shadow-2xl pointer-events-auto hover:brightness-110 transition group hidden md:flex" title="Love Carved Park Bench">
+          {/* Slat backrest with a heart cutout */}
+          <div className="h-6 border-b border-[#BDA6CE]/35 flex justify-center items-center font-bold text-xs text-[#9B8EC7] select-none">
+            💖
+          </div>
+          {/* Bench seat */}
+          <div className="h-3 bg-[#9B8EC7] rounded shadow-inner" />
+          {/* Bench armrests and legs */}
+          <div className="flex justify-between px-2 -mb-2.5">
+            <div className="w-1.5 h-4 bg-[#211c34] shadow" />
+            <div className="w-1.5 h-4 bg-[#211c34] shadow" />
+          </div>
+        </div>
+
+        {/* 4. SWINGING MEADOW HAMMOCK (Bottom Right Corner) */}
+        <div className="absolute bottom-24 right-4 w-36 h-12 pointer-events-auto select-none hidden md:block" title="Sunset Siesta Hammock">
+          <motion.div 
+            animate={{ rotate: [-2, 2, -2] }} 
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            className="w-full h-full flex flex-col items-center relative"
+          >
+            {/* Supporting ropes hooked to imaginary trees */}
+            <div className="absolute top-0 inset-x-0 h-0.5 bg-[#BDA6CE]/40" />
+            {/* Woven Mesh Hammock curve */}
+            <div className="w-full h-6 bg-gradient-to-r from-[#9B8EC7]/20 via-[#BDA6CE]/50 to-[#B4D2D9]/20 rounded-b-full border-b-2 border-[#BDA6CE] shadow-lg flex items-center justify-center text-[10px] text-[#F2EAE0] font-serif">
+              🍃 R E L A X
+            </div>
+            {/* Sleep Pillow */}
+            <div className="absolute -top-1.5 left-4 w-5 h-3 bg-[#F2EAE0] rounded-sm border border-[#BDA6CE] rotate-[-12deg]" />
+          </motion.div>
+        </div>
+
+        {/* 5. MEADOW FLAT STONE PAVERS (Floor accents) */}
+        <div className="absolute bottom-2 inset-x-24 h-6 flex justify-around pointer-events-none select-none z-0">
+          <div className="w-14 h-3 bg-slate-800/40 rounded-full border border-slate-700/20 transform skew-x-12" />
+          <div className="w-10 h-2 bg-slate-800/40 rounded-full border border-slate-700/20 transform -skew-x-12" />
+          <div className="w-16 h-3 bg-slate-800/40 rounded-full border border-slate-700/20 transform skew-x-6" />
+        </div>
 
         {/* Intro */}
         <div className="text-center max-w-lg mx-auto space-y-2 mb-4 z-10">

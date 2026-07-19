@@ -4,6 +4,104 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
+
+  /* Custom palette colors */
+  --color-primary: #F2EAE0;
+  --color-secondary: #B4D2D9;
+  --color-supporting1: #BDA6CE;
+  --color-supporting2: #9B8EC7;
+
+  /* Remap Tailwind core colors to enforce the user's color scheme globally */
+  --color-purple-50: #fbfafd;
+  --color-purple-100: #F2EAE0;
+  --color-purple-200: #B4D2D9;
+  --color-purple-300: #BDA6CE;
+  --color-purple-400: #9B8EC7;
+  --color-purple-500: #9B8EC7;
+  --color-purple-600: #8172b6;
+  --color-purple-700: #6c5ca2;
+  --color-purple-800: #574a86;
+  --color-purple-850: #423867;
+  --color-purple-900: #423867;
+  --color-purple-950: #211c34;
+
+  --color-pink-50: #fcfbfa;
+  --color-pink-100: #F2EAE0;
+  --color-pink-200: #B4D2D9;
+  --color-pink-300: #BDA6CE;
+  --color-pink-400: #9B8EC7;
+  --color-pink-500: #9B8EC7;
+  --color-pink-600: #8172b6;
+  --color-pink-700: #6c5ca2;
+  --color-pink-850: #423867;
+  --color-pink-900: #423867;
+  --color-pink-950: #211c34;
+
+  --color-indigo-50: #fcfbfa;
+  --color-indigo-100: #F2EAE0;
+  --color-indigo-200: #B4D2D9;
+  --color-indigo-300: #BDA6CE;
+  --color-indigo-400: #9B8EC7;
+  --color-indigo-500: #9B8EC7;
+  --color-indigo-600: #8172b6;
+  --color-indigo-700: #6c5ca2;
+  --color-indigo-900: #423867;
+  --color-indigo-950: #211c34;
+
+  --color-rose-50: #fcfbfa;
+  --color-rose-100: #F2EAE0;
+  --color-rose-200: #B4D2D9;
+  --color-rose-300: #BDA6CE;
+  --color-rose-400: #9B8EC7;
+  --color-rose-500: #9B8EC7;
+  --color-rose-600: #8172b6;
+  --color-rose-700: #6c5ca2;
+  --color-rose-900: #423867;
+  --color-rose-950: #211c34;
+
+  --color-fuchsia-50: #fcfbfa;
+  --color-fuchsia-100: #F2EAE0;
+  --color-fuchsia-200: #B4D2D9;
+  --color-fuchsia-300: #BDA6CE;
+  --color-fuchsia-400: #9B8EC7;
+  --color-fuchsia-500: #9B8EC7;
+  --color-fuchsia-600: #8172b6;
+  --color-fuchsia-700: #6c5ca2;
+  --color-fuchsia-900: #423867;
+  --color-fuchsia-950: #211c34;
+
+  --color-sky-50: #fcfbfa;
+  --color-sky-100: #F2EAE0;
+  --color-sky-200: #B4D2D9;
+  --color-sky-300: #BDA6CE;
+  --color-sky-400: #9B8EC7;
+  --color-sky-500: #9B8EC7;
+  --color-sky-600: #8172b6;
+  --color-sky-700: #6c5ca2;
+  --color-sky-900: #423867;
+  --color-sky-950: #211c34;
+
+  --color-emerald-50: #fcfbfa;
+  --color-emerald-100: #F2EAE0;
+  --color-emerald-200: #B4D2D9;
+  --color-emerald-300: #BDA6CE;
+  --color-emerald-400: #9B8EC7;
+  --color-emerald-500: #9B8EC7;
+  --color-emerald-600: #8172b6;
+  --color-emerald-700: #6c5ca2;
+  --color-emerald-900: #423867;
+  --color-emerald-950: #211c34;
+
+  --color-teal-50: #fcfbfa;
+  --color-teal-100: #F2EAE0;
+  --color-teal-200: #B4D2D9;
+  --color-teal-300: #BDA6CE;
+  --color-teal-400: #9B8EC7;
+  --color-teal-500: #9B8EC7;
+  --color-teal-600: #8172b6;
+  --color-teal-700: #6c5ca2;
+  --color-teal-900: #423867;
+  --color-teal-950: #211c34;
 }
 
 /* Custom utilities for 3D card flipping */
