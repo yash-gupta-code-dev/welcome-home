@@ -32,7 +32,7 @@ const DEFAULT_GUESTBOOK: GuestbookEntry[] = [
   },
   {
     id: '3',
-    name: 'Priya (Your Sister) 🔬',
+    name: 'Pragati (Your Sister) 🔬',
     message: 'Happy Birthday, Yash! Whether analyzing medical lab results for my government job or watching you run your terminal scripts, we both love a clean, bug-free diagnosis! Wishing you a legendary year ahead!',
     timestamp: 'Today, 10:30 AM',
     avatar: '🔬',
