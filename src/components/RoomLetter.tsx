@@ -63,13 +63,22 @@ export default function RoomLetter({ onBackToMap }: RoomLetterProps) {
             <span>Cozy ambient lofi chords are playing in the background... Enjoy reading.</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-extrabold text-stone-900 mb-6 border-b-2 border-stone-800/10 pb-4 flex justify-between items-center">
-            <span>My Dearest Yash,</span>
-            <Heart className="w-6 h-6 text-red-600 fill-current animate-pulse" />
-          </h2>
+          <div className="flex flex-wrap justify-between items-center border-b-2 border-stone-800/10 pb-4 mb-6 gap-2">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-stone-900 flex items-center gap-2">
+              <span>Hey, Love.</span>
+              <Heart className="w-6 h-6 text-red-600 fill-current animate-pulse" />
+            </h2>
+            <span className="font-sans text-xs md:text-sm font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full border border-rose-300 shadow-sm">
+              🎂 August 18th, 2026
+            </span>
+          </div>
+
+          <p className="font-bold text-stone-900 bg-amber-100/60 p-4 rounded-2xl border border-amber-900/10 shadow-sm">
+            Welcom to our little, cute house on internet-a-place build just for you. one tiny detail at a time. Every room holds a memory, a surprise and some task and piece of how much u mean to me.
+          </p>
 
           <p>
-            Today is a very special day. It's the birthday of my favorite human, my partner-in-crime, and my brilliant coder companion.
+            I hope u alove it all.Take ur taketime exploring, look around and make yourself at home.
           </p>
 
           <p>
@@ -77,20 +86,12 @@ export default function RoomLetter({ onBackToMap }: RoomLetterProps) {
           </p>
 
           <p>
-            I've always admired your brilliant mind, your relentless drive, and above all, the massive, kind heart you carry. You tackle complex production bugs and life challenges with a quiet persistence that makes me so incredibly proud to stand by your side.
-          </p>
-
-          <p>
             No matter how fast the world changes or how busy we get, remember that this little house of memories is always open for you. I will always be in your corner, cheering you on, supporting you through every bug, and celebrating all your incredible triumphs.
           </p>
 
-          <p>
-            I wish you a year of absolute happiness, deep peace, coffee that tastes perfect, code that compiles on the first try, and the courage to pursue every single dream you have ever imagined.
-          </p>
-
           <div className="pt-8 border-t border-stone-800/10 flex flex-col items-end">
-            <p className="text-sm font-sans font-semibold text-stone-500 uppercase tracking-widest leading-none mb-1">With all my love,</p>
-            <p className="text-3xl md:text-4xl font-extrabold text-red-700">- Your Rashi ❤️</p>
+            <p className="text-xl md:text-2xl font-bold text-rose-600 mb-1">Love you Aaho</p>
+            <p className="text-3xl md:text-4xl font-extrabold text-stone-900">- From your duggu. ❤️</p>
           </div>
         </div>
 

@@ -5,13 +5,46 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Book, Flame, FlameKindling, FileText, Send, User, ChevronLeft, Sparkles, Armchair } from 'lucide-react';
+import { Book, Flame, FlameKindling, FileText, Send, User, ChevronLeft, Sparkles, Armchair, Image, Edit2, Check, X, RefreshCw, Home, Upload, Heart } from 'lucide-react';
 import { GuestbookEntry } from '../types';
 import { audioEngine } from '../lib/AudioEngine';
 import InteractivePhotoFrame from './InteractivePhotoFrame';
 import Guestbook from './Guestbook';
 // @ts-ignore
 import livingRoomSofa from '../assets/images/living_room_sofa_1784441684930.jpg';
+
+export interface BalloonMemory {
+  id: number;
+  title: string;
+  caption: string;
+  imageUrl: string;
+  color: string;
+  badge: string;
+}
+
+// ==========================================
+// 🎈 BALLOON SURPRISE IMAGES (DUMMY IMAGES)
+// Provide a place to add images: you can replace these dummy image URLs with your real photos!
+// You can also use the in-app "✏️ Change Image" button when the balloons pop!
+// ==========================================
+export const DEFAULT_BALLOON_MEMORIES: BalloonMemory[] = [
+  {
+    id: 1,
+    title: "Happy Birthday Yash! 🎉",
+    caption: "Wishing you a birthday filled with joy, warmth, and endless happiness!",
+    imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80", // Dummy celebration photo
+    color: "from-[#BDA6CE] via-[#9B8EC7] to-[#211c34]",
+    badge: "🎈 Memory #1",
+  },
+  {
+    id: 2,
+    title: "Endless Adventures 🚀🌟",
+    caption: "Here is to another year of awesome engineering, coding, and melodies!",
+    imageUrl: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80", // Dummy balloon/party photo
+    color: "from-[#B4D2D9] via-[#6ba8b8] to-[#1e3c48]",
+    badge: "🎈 Memory #2",
+  },
+];
 
 interface RoomHallProps {
   onBackToMap: () => void;
@@ -36,7 +69,7 @@ const DEFAULT_GUESTBOOK: GuestbookEntry[] = [
   },
   {
     id: '3',
-    name: 'Priya (Your Sister) 🔬',
+    name: 'Pragati (Your Sister) 🔬',
     message: 'Happy Birthday, Yash! Whether analyzing medical lab results for my government job or watching you run your terminal scripts, we both love a clean, bug-free diagnosis! Wishing you a legendary year ahead!',
     timestamp: 'Today, 10:30 AM',
     avatar: '🔬',
@@ -60,6 +93,59 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
   const [sittingOnSofa, setSittingOnSofa] = useState(false);
   const [sofaInteractionCount, setSofaInteractionCount] = useState(0);
   const [isDayTime, setIsDayTime] = useState(false);
+
+  // ==========================================
+  // 🎈 BALLOON ENTRANCE & PHOTO MEMORIES STATE
+  // ==========================================
+  const [showBalloonIntro, setShowBalloonIntro] = useState(true);
+  const [poppedBalloons, setPoppedBalloons] = useState<number[]>([]);
+  const [balloonMemories, setBalloonMemories] = useState<BalloonMemory[]>(() => {
+    const saved = localStorage.getItem('yash_balloon_memories');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return DEFAULT_BALLOON_MEMORIES;
+  });
+  const [showWelcomeNoteModal, setShowWelcomeNoteModal] = useState(false);
+  const [editingMemoryId, setEditingMemoryId] = useState<number | null>(null);
+  const [editImageUrl, setEditImageUrl] = useState('');
+  const [editTitle, setEditTitle] = useState('');
+  const [editCaption, setEditCaption] = useState('');
+
+  const handlePopBalloon = (id: number) => {
+    if (poppedBalloons.includes(id)) return;
+    audioEngine.init();
+    audioEngine.playConfettiPop();
+    const nextPopped = [...poppedBalloons, id];
+    setPoppedBalloons(nextPopped);
+    if (nextPopped.length === 2) {
+      setTimeout(() => {
+        audioEngine.playChime();
+        audioEngine.playPartyHorn();
+      }, 500);
+    }
+  };
+
+  const handleStartEditMemory = (memory: BalloonMemory) => {
+    setEditingMemoryId(memory.id);
+    setEditImageUrl(memory.imageUrl);
+    setEditTitle(memory.title);
+    setEditCaption(memory.caption);
+  };
+
+  const handleSaveMemory = (e: FormEvent) => {
+    e.preventDefault();
+    if (editingMemoryId === null) return;
+    const updated = balloonMemories.map(m => 
+      m.id === editingMemoryId 
+        ? { ...m, imageUrl: editImageUrl.trim() || m.imageUrl, title: editTitle.trim() || m.title, caption: editCaption.trim() || m.caption }
+        : m
+    );
+    setBalloonMemories(updated);
+    localStorage.setItem('yash_balloon_memories', JSON.stringify(updated));
+    setEditingMemoryId(null);
+    audioEngine.playSparkle();
+  };
 
   const handleWindowClick = () => {
     audioEngine.init();
@@ -165,6 +251,378 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
       exit={{ opacity: 0 }}
       className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-8 text-slate-100 flex flex-col min-h-[85vh] rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl bg-slate-950"
     >
+      {/* ========================================== */}
+      {/* 🎈 BALLOON SURPRISE ENTRANCE & PHOTO POP OVERLAY */}
+      {/* ========================================== */}
+      <AnimatePresence>
+        {showBalloonIntro && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-50 bg-gradient-to-br from-[#211c34] via-[#9B8EC7]/95 to-[#141221] backdrop-blur-2xl flex flex-col justify-between p-6 md:p-8 overflow-y-auto"
+          >
+            {/* Top Bar */}
+            <div className="flex justify-between items-center w-full max-w-4xl mx-auto border-b border-[#BDA6CE]/30 pb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl animate-bounce">🎈</span>
+                <h2 className="text-lg md:text-xl font-serif font-bold text-[#F2EAE0]">
+                  Yash's Birthday Celebration
+                </h2>
+              </div>
+              <button
+                onClick={() => {
+                  audioEngine.playSparkle();
+                  setShowBalloonIntro(false);
+                }}
+                className="text-xs bg-[#211c34]/60 hover:bg-[#211c34] text-[#F2EAE0] border border-[#BDA6CE] px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5 font-medium shadow-md cursor-pointer"
+                title="Skip balloon surprise and enter home"
+              >
+                <Home className="w-3.5 h-3.5 text-[#B4D2D9]" />
+                <span>{poppedBalloons.length === 2 ? "Enter Home Now" : "Skip to Home"}</span>
+              </button>
+            </div>
+
+            {/* Main Center Area */}
+            <div className="my-auto py-6 text-center max-w-4xl mx-auto w-full">
+              <h3 className="text-2xl md:text-3xl font-serif font-bold text-[#F2EAE0] drop-shadow">
+                Pop the Birthday Balloons! ✨
+              </h3>
+              <p className="text-sm md:text-base text-[#B4D2D9] mt-2 max-w-lg mx-auto">
+                Tap each balloon to pop it and reveal a special birthday memory! You can easily replace these dummy images with your own photos anytime.
+              </p>
+
+              {/* Balloon Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 mt-8 items-center justify-center">
+                {balloonMemories.map((item) => {
+                  const isPopped = poppedBalloons.includes(item.id);
+                  return (
+                    <div key={item.id} className="flex flex-col items-center justify-center min-h-[300px]">
+                      {!isPopped ? (
+                        /* 🎈 THE UNPOPPED BALLOON */
+                        <motion.div
+                          onClick={() => handlePopBalloon(item.id)}
+                          animate={{ y: [-10, 10, -10], rotate: [-2, 2, -2] }}
+                          transition={{ repeat: Infinity, duration: 3 + item.id * 0.5, ease: "easeInOut" }}
+                          whileHover={{ scale: 1.08 }}
+                          whileTap={{ scale: 0.92 }}
+                          className="flex flex-col items-center cursor-pointer group select-none py-4"
+                          title="Click to Pop Balloon!"
+                        >
+                          {/* Balloon Oval Body */}
+                          <div
+                            className={`w-48 h-60 md:w-52 md:h-64 rounded-[50%_50%_50%_50%_/_60%_60%_40%_40%] bg-gradient-to-br ${item.color} shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center relative border border-white/25 p-6 text-center`}
+                            style={{ boxShadow: 'inset -12px -12px 25px rgba(0,0,0,0.35), 0 20px 35px rgba(0,0,0,0.4)' }}
+                          >
+                            {/* Shiny Highlights */}
+                            <div className="w-12 h-20 bg-white/30 rounded-full rotate-[-30deg] absolute top-6 left-6 blur-[1px] pointer-events-none" />
+                            <div className="w-3 h-8 bg-white/20 rounded-full rotate-[-30deg] absolute top-28 left-8 blur-[1px] pointer-events-none" />
+
+                            {/* Badge & Instruction */}
+                            <div className="bg-black/35 backdrop-blur-md border border-white/40 rounded-full px-4 py-2 text-white font-bold text-sm shadow-xl group-hover:scale-105 transition flex items-center gap-1.5 animate-bounce">
+                              <span>🎈 Tap to Pop!</span>
+                            </div>
+                            <span className="text-xs text-white/90 mt-2 font-semibold tracking-wide">{item.badge}</span>
+                          </div>
+
+                          {/* Knot */}
+                          <div className="w-6 h-4 -mt-1 bg-[#9B8EC7] rounded-b-md shadow-md z-10" />
+
+                          {/* Wavy String */}
+                          <div className="w-0.5 h-24 bg-gradient-to-b from-white/60 via-white/30 to-transparent mx-auto relative">
+                            <motion.div
+                              animate={{ x: [-3, 3, -3] }}
+                              transition={{ repeat: Infinity, duration: 2 }}
+                              className="absolute inset-0 w-full h-full"
+                            />
+                          </div>
+                        </motion.div>
+                      ) : (
+                        /* 🖼️ THE REVEALED POLAROID PHOTO FRAME */
+                        <motion.div
+                          initial={{ scale: 0.3, opacity: 0, rotate: -15 }}
+                          animate={{ scale: 1, opacity: 1, rotate: item.id === 1 ? -2 : 2 }}
+                          transition={{ type: "spring", damping: 15, stiffness: 120 }}
+                          className="bg-[#F2EAE0] text-[#211c34] p-4 pb-5 rounded-2xl shadow-2xl border-4 border-[#BDA6CE] relative group flex flex-col justify-between max-w-xs md:max-w-sm mx-auto w-full"
+                        >
+                          {/* Top Badge & Edit Button */}
+                          <div className="flex justify-between items-center mb-2 px-1">
+                            <span className="bg-[#9B8EC7] text-[#F2EAE0] text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-sm">
+                              {item.badge} Revealed ✨
+                            </span>
+                            <button
+                              onClick={() => handleStartEditMemory(item)}
+                              className="text-xs bg-[#211c34]/10 hover:bg-[#211c34]/25 text-[#211c34] px-2.5 py-1 rounded-md transition flex items-center gap-1 font-bold cursor-pointer"
+                              title="Change image URL or upload photo"
+                            >
+                              <Edit2 className="w-3 h-3 text-[#211c34]" />
+                              <span>Change Image</span>
+                            </button>
+                          </div>
+
+                          {/* The Image */}
+                          <div className="relative overflow-hidden rounded-xl bg-stone-200 border border-stone-300 shadow-inner aspect-4/3 w-full group/img">
+                            <img
+                              src={item.imageUrl}
+                              alt={item.title}
+                              className="w-full h-full object-cover transition duration-500 group-hover/img:scale-105"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80';
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition flex items-end p-3 pointer-events-none">
+                              <span className="text-white text-xs font-medium">✨ Click 'Change Image' above to replace!</span>
+                            </div>
+                          </div>
+
+                          {/* Caption & Title */}
+                          <div className="mt-3 text-center px-1">
+                            <h4 className="text-lg font-serif font-bold text-[#211c34] leading-tight">{item.title}</h4>
+                            <p className="text-xs font-sans text-stone-600 mt-1 leading-relaxed">{item.caption}</p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bottom Footer Area */}
+            <div className="w-full max-w-2xl mx-auto text-center pt-4 border-t border-[#BDA6CE]/30">
+              {poppedBalloons.length < 2 ? (
+                <div className="flex items-center justify-center gap-2 text-sm font-medium text-[#F2EAE0]/80">
+                  <Sparkles className="w-4 h-4 text-[#B4D2D9] animate-spin" />
+                  <span>Popped {poppedBalloons.length} of 2 balloons. Pop both to unlock your special Home greeting!</span>
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="bg-gradient-to-br from-[#fcf8f0] via-[#fcf5e9] to-[#f7eee1] text-stone-900 border-4 border-[#BDA6CE] rounded-3xl p-6 md:p-8 shadow-2xl relative max-w-2xl mx-auto my-3 text-left overflow-hidden"
+                >
+                  {/* Decorative Heart */}
+                  <div className="absolute top-4 right-4 text-rose-500 animate-pulse">
+                    <Heart className="w-8 h-8 fill-current" />
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#9B8EC7] uppercase tracking-wider mb-2">
+                    <span>💌 Special Welcome Note</span>
+                  </div>
+
+                  <div className="flex flex-wrap justify-between items-center border-b border-stone-300 pb-2 mb-3 gap-2">
+                    <h4 className="text-2xl md:text-3xl font-serif font-extrabold text-stone-900 flex items-center gap-2">
+                      <span>Hey, Love.</span>
+                      <Heart className="w-6 h-6 text-red-600 fill-current animate-bounce" />
+                    </h4>
+                    <span className="font-sans text-xs md:text-sm font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full border border-rose-300 shadow-sm">
+                      🎂 August 18th, 2026
+                    </span>
+                  </div>
+
+                  <p className="font-serif text-base md:text-lg text-stone-800 leading-relaxed mb-3 font-medium bg-amber-100/50 p-3.5 rounded-xl border border-amber-900/10 shadow-sm">
+                    Welcom to our little, cute house on internet-a-place build just for you. one tiny detail at a time. Every room holds a memory, a surprise and some task and piece of how much u mean to me.
+                  </p>
+
+                  <p className="font-serif text-base md:text-lg text-stone-800 leading-relaxed mb-6">
+                    I hope u alove it all.Take ur taketime exploring, look around and make yourself at home.
+                  </p>
+
+                  <div className="border-t border-stone-300 pt-3 flex flex-col items-end text-right font-serif">
+                    <p className="text-lg font-bold text-rose-600 mb-0.5">Love you Aaho</p>
+                    <p className="text-xl md:text-2xl font-extrabold text-stone-900">From your duggu. ❤️</p>
+                  </div>
+
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      onClick={() => {
+                        audioEngine.playSparkle();
+                        setShowBalloonIntro(false);
+                      }}
+                      className="bg-gradient-to-r from-[#9B8EC7] to-[#BDA6CE] hover:from-[#BDA6CE] hover:to-[#9B8EC7] text-[#211c34] px-8 py-3 rounded-full font-bold text-sm md:text-base shadow-xl hover:scale-105 transition duration-300 flex items-center gap-2 border-2 border-[#F2EAE0] cursor-pointer"
+                    >
+                      <Home className="w-5 h-5" />
+                      <span>🏠 Enter Home Now</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ========================================== */}
+      {/* ✏️ EDIT / CHANGE BALLOON IMAGE MODAL */}
+      {/* ========================================== */}
+      <AnimatePresence>
+        {editingMemoryId !== null && (
+          <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[#211c34] border-2 border-[#BDA6CE] rounded-2xl p-6 max-w-md w-full text-slate-100 shadow-2xl"
+            >
+              <div className="flex justify-between items-center border-b border-[#BDA6CE]/30 pb-3 mb-4">
+                <h3 className="text-lg font-serif font-bold text-[#F2EAE0] flex items-center gap-2">
+                  <Edit2 className="w-5 h-5 text-[#B4D2D9]" />
+                  <span>Replace Balloon Photo & Caption</span>
+                </h3>
+                <button onClick={() => setEditingMemoryId(null)} className="text-slate-400 hover:text-white cursor-pointer">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <form onSubmit={handleSaveMemory} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-[#B4D2D9] uppercase tracking-wider mb-1">
+                    Image URL (Or Upload Photo Below)
+                  </label>
+                  <input
+                    type="url"
+                    value={editImageUrl}
+                    onChange={(e) => setEditImageUrl(e.target.value)}
+                    placeholder="https://..."
+                    className="w-full bg-[#141221] border border-[#BDA6CE]/40 rounded-lg p-2.5 text-sm text-[#F2EAE0] focus:outline-none focus:border-[#F2EAE0]"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    You can paste any direct image link, or use the uploader below!
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#BDA6CE] uppercase tracking-wider mb-1">
+                    Upload from your Computer / Phone
+                  </label>
+                  <label className="w-full border-2 border-dashed border-[#BDA6CE]/50 hover:border-[#F2EAE0] rounded-lg p-3 flex items-center justify-center gap-2 cursor-pointer bg-[#9B8EC7]/10 hover:bg-[#9B8EC7]/20 transition text-sm text-[#F2EAE0]">
+                    <Upload className="w-4 h-4 text-[#B4D2D9]" />
+                    <span>Choose a local image file...</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            if (event.target?.result) {
+                              setEditImageUrl(event.target.result as string);
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#B4D2D9] uppercase tracking-wider mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="w-full bg-[#141221] border border-[#BDA6CE]/40 rounded-lg p-2.5 text-sm text-[#F2EAE0] focus:outline-none focus:border-[#F2EAE0]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#B4D2D9] uppercase tracking-wider mb-1">Caption</label>
+                  <textarea
+                    rows={2}
+                    value={editCaption}
+                    onChange={(e) => setEditCaption(e.target.value)}
+                    className="w-full bg-[#141221] border border-[#BDA6CE]/40 rounded-lg p-2.5 text-sm text-[#F2EAE0] focus:outline-none focus:border-[#F2EAE0] resize-none"
+                  />
+                </div>
+
+                <div className="flex gap-3 justify-end pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingMemoryId(null)}
+                    className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium text-slate-300 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-lg bg-gradient-to-r from-[#9B8EC7] to-[#BDA6CE] hover:from-[#BDA6CE] hover:to-[#9B8EC7] text-[#211c34] font-bold text-sm shadow-lg flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>Save & Replace</span>
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ========================================== */}
+      {/* 💌 WELCOME NOTE MODAL */}
+      {/* ========================================== */}
+      <AnimatePresence>
+        {showWelcomeNoteModal && (
+          <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-gradient-to-br from-[#fcf8f0] via-[#fcf5e9] to-[#f7eee1] text-stone-900 border-4 border-[#BDA6CE] rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative"
+            >
+              <div className="flex justify-between items-center border-b border-stone-300 pb-3 mb-4">
+                <div className="flex items-center gap-2 text-sm font-bold text-[#9B8EC7] uppercase tracking-wider">
+                  <Heart className="w-5 h-5 text-rose-500 fill-current animate-pulse" />
+                  <span>Welcome Note from Duggu</span>
+                </div>
+                <button 
+                  onClick={() => setShowWelcomeNoteModal(false)} 
+                  className="text-stone-400 hover:text-stone-800 cursor-pointer p-1 rounded-full bg-stone-200/50 hover:bg-stone-200 transition"
+                  title="Close note"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-4 font-serif text-stone-800">
+                <div className="flex flex-wrap justify-between items-center border-b border-stone-300 pb-2 gap-2">
+                  <h4 className="text-2xl md:text-3xl font-extrabold text-stone-900 flex items-center gap-2">
+                    <span>Hey, Love.</span>
+                    <Heart className="w-6 h-6 text-red-600 fill-current" />
+                  </h4>
+                  <span className="font-sans text-xs md:text-sm font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full border border-rose-300 shadow-sm">
+                    🎂 August 18th, 2026
+                  </span>
+                </div>
+
+                <p className="text-base md:text-lg leading-relaxed font-medium bg-amber-100/50 p-3.5 rounded-xl border border-amber-900/10 shadow-sm">
+                  Welcom to our little, cute house on internet-a-place build just for you. one tiny detail at a time. Every room holds a memory, a surprise and some task and piece of how much u mean to me.
+                </p>
+
+                <p className="text-base md:text-lg leading-relaxed">
+                  I hope u alove it all.Take ur taketime exploring, look around and make yourself at home.
+                </p>
+
+                <div className="border-t border-stone-300 pt-4 flex flex-col items-end text-right">
+                  <p className="text-lg font-bold text-rose-600 mb-0.5">Love you Aaho</p>
+                  <p className="text-2xl font-extrabold text-stone-900">From your duggu. ❤️</p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setShowWelcomeNoteModal(false)}
+                  className="bg-gradient-to-r from-[#9B8EC7] to-[#BDA6CE] hover:from-[#BDA6CE] hover:to-[#9B8EC7] text-[#211c34] px-6 py-2 rounded-full font-bold text-sm shadow-md transition cursor-pointer"
+                >
+                  Close Note
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* IMMERSIVE 2D ROOM BACKDROP */}
       <div className="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
         {/* Living Room Walls (Deep Slate-Teal Wallpaper with Day/Night state) */}
@@ -388,16 +846,24 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
 
           {/* 5. COZY SIDE TABLE WITH RECORD PLAYER (Right center ground overlay) */}
           <div className="absolute bottom-6 right-[15%] flex flex-col items-center pointer-events-auto z-10" title="Vinyl Record Table">
-            {/* Record Player & Coffee Mug */}
-            <div className="h-6 w-20 bg-gradient-to-b from-slate-900 to-zinc-950 border border-slate-800 rounded flex justify-around items-center px-1 shadow-md relative group">
+            {/* Record Player & Coffee Mug & Welcome Letter */}
+            <div className="h-6 w-28 bg-gradient-to-b from-slate-900 to-zinc-950 border border-slate-800 rounded flex justify-around items-center px-1 shadow-md relative group">
               <span className="text-xs group-hover:rotate-[360deg] duration-1000 cursor-pointer" title="Record Vinyl Disc">📻</span>
+              <span 
+                onClick={() => {
+                  audioEngine.playSparkle();
+                  setShowWelcomeNoteModal(true);
+                }}
+                className="text-xs cursor-pointer animate-pulse hover:scale-125 transition" 
+                title="💌 Click to read Welcome Note from Duggu!"
+              >💌</span>
               <span className="text-xs animate-bounce" title="Aromatic Herb Tea">🍵</span>
-              <div className="absolute -top-1 w-12 h-0.5 bg-yellow-500/20" />
+              <div className="absolute -top-1 w-16 h-0.5 bg-yellow-500/20" />
             </div>
             {/* Wooden Side Table Board */}
-            <div className="w-24 h-2 bg-[#9B8EC7] border border-[#BDA6CE] rounded shadow-md" />
+            <div className="w-32 h-2 bg-[#9B8EC7] border border-[#BDA6CE] rounded shadow-md" />
             {/* Flared Legs */}
-            <div className="flex gap-16 -mt-0.5">
+            <div className="flex gap-20 -mt-0.5">
               <div className="w-1 h-8 bg-[#211c34] shadow-md rotate-[-12deg]" />
               <div className="w-1 h-8 bg-[#211c34] shadow-md rotate-[12deg]" />
             </div>
@@ -408,7 +874,7 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
       {/* FOREGROUND INTERACTIVE CONTAINER */}
       <div className="relative z-10 flex flex-col flex-grow">
         {/* Navigation Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
           <button
             onClick={onBackToMap}
             className="flex items-center gap-2 px-4 py-2 bg-slate-900/90 hover:bg-slate-850 text-slate-100 rounded-full border border-slate-800 text-sm font-medium transition cursor-pointer shadow-lg backdrop-blur-sm"
@@ -417,8 +883,31 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
             <ChevronLeft className="w-4 h-4" />
             Back to House Map
           </button>
-          <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full text-xs text-amber-300 backdrop-blur-sm">
-            📍 Grand Entry Living Room
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => {
+                audioEngine.playSparkle();
+                setShowWelcomeNoteModal(true);
+              }}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gradient-to-r from-rose-500/20 to-amber-500/20 hover:from-rose-500/40 hover:to-amber-500/40 border border-rose-300/50 text-[#F2EAE0] rounded-full text-xs font-bold transition shadow-lg cursor-pointer"
+              title="Read special love note from Duggu"
+            >
+              <span className="animate-bounce">💌</span>
+              <span>Welcome Note</span>
+            </button>
+            <button
+              onClick={() => {
+                audioEngine.playSparkle();
+                setShowBalloonIntro(true);
+              }}
+              className="flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#9B8EC7]/20 to-[#BDA6CE]/20 hover:from-[#9B8EC7]/40 hover:to-[#BDA6CE]/40 border border-[#BDA6CE] text-[#F2EAE0] rounded-full text-xs font-bold transition shadow-lg cursor-pointer animate-pulse"
+              title="Re-open the birthday balloons and customize images"
+            >
+              <span>🎈 Pop Balloons & Photos</span>
+            </button>
+            <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full text-xs text-amber-300 backdrop-blur-sm">
+              📍 Grand Entry Living Room
+            </div>
           </div>
         </div>
 
@@ -780,7 +1269,7 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl p-6 relative overflow-hidden shadow-2xl flex flex-col gap-4 text-slate-100 max-h-[85vh]"
+              className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-6xl p-6 md:p-8 relative overflow-y-auto shadow-2xl flex flex-col gap-4 text-slate-100 max-h-[92vh]"
             >
               <Guestbook onClose={() => setShowGuestbook(false)} />
             </motion.div>
@@ -809,7 +1298,7 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
             >
               <div className="space-y-6 text-xl md:text-2xl leading-relaxed">
                 <div className="flex justify-between items-center border-b border-amber-900/10 pb-4">
-                  <span className="font-bold text-amber-800 text-2xl">July 18th, 2026</span>
+                  <span className="font-bold text-amber-800 text-2xl">August 18th, 2026</span>
                   <button
                     onClick={() => setShowLetter(false)}
                     className="px-3 py-1 bg-amber-900/10 hover:bg-amber-900/20 text-amber-900 font-sans rounded-lg text-xs cursor-pointer transition"

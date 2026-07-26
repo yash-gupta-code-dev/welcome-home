@@ -44,7 +44,7 @@ const POLAROIDS: PolaroidPhoto[] = [
     imagePlaceholder: 'bg-gradient-to-tr from-yellow-300 to-orange-400',
     emoji: '🍳',
     date: 'Spring 2025',
-    description: "Helping your mom at her food stall business! We tried to make a giant batch of her special rolls, but we accidentally spilled the batter everywhere, making your sister Priya laugh so hard she dropped her diagnostics books!",
+    description: "Helping your mom at her food stall business! We tried to make a giant batch of her special rolls, but we accidentally spilled the batter everywhere, making your sister Pragati laugh so hard she dropped her diagnostics books!",
   },
   {
     id: '5',

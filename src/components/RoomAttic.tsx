@@ -461,7 +461,7 @@ export default function RoomAttic({
                     <div className="w-full border-t border-stone-300 pt-1 uppercase tracking-wider">With All My Heart</div>
                   </div>
                   <div className="text-center flex flex-col items-center">
-                    <span className="text-stone-900 mb-1 font-mono">July 18th, 2026</span>
+                    <span className="text-stone-900 mb-1 font-mono">August 18th, 2026</span>
                     <div className="w-full border-t border-stone-300 pt-1 uppercase tracking-wider">Date Granted</div>
                   </div>
                 </div>
