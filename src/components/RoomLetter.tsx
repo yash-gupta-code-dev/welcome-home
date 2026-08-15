@@ -74,19 +74,23 @@ export default function RoomLetter({ onBackToMap }: RoomLetterProps) {
           </div>
 
           <p className="font-bold text-stone-900 bg-amber-100/60 p-4 rounded-2xl border border-amber-900/10 shadow-sm">
-            Welcom to our little, cute house on internet-a-place build just for you. one tiny detail at a time. Every room holds a memory, a surprise and some task and piece of how much u mean to me.
+            First of all, Happiest 24th birthday to you! May you get all the success, love, peace and happiness in your life. This is a small letter for you, I hope you love it.
           </p>
 
           <p>
-            I hope u alove it all.Take ur taketime exploring, look around and make yourself at home.
+            So thank you so much for being here with me, loving me all along. I hope you're happy today, enjoying your fullest and getting all the love from your family, friends, and all the love you deserve. I really want to thank your mother who gave birth to such a beautiful soul who loves the people in his surroundings and has good teachings and a good heart.
           </p>
 
           <p>
-            Looking back at our beautiful journey, I feel incredibly lucky to have you. From our cozy late-night conversations to our silly kitchen cooking adventures, and watching you put your whole heart into both your code and your music—you inspire me every single day.
+            I'm happy to have you in my life. You really cherish my world by being there with me. All these months I have spent with you were the bestest of my life, and every struggle we went through was a test of our relationship, and I'm happy we passed it. All these months you went through a lot and still you gave your best in everything—in your relationship, in your work, and in your music as well. I'm happy I chose the best partner I could ever get.
           </p>
 
           <p>
-            No matter how fast the world changes or how busy we get, remember that this little house of memories is always open for you. I will always be in your corner, cheering you on, supporting you through every bug, and celebrating all your incredible triumphs.
+            You know the best thing in you is you accept things and make improvements in them. Even when things were messy between us, you were always positive about it, and that kept this love between us. I at some point was not capable of facing things, but you made me stand up, and I really thank you for this. I'm grateful to you for handling all my mood swings and my tantrums. Thank you so much for being there for me always. You're the best boyfriend I could ever have, love.
+          </p>
+
+          <p>
+            And finally, I love you more, and I will love you for life—whether you're poor or rich, whether you're handsome or not.
           </p>
 
           <div className="pt-8 border-t border-stone-800/10 flex flex-col items-end">
