@@ -112,16 +112,6 @@ const DEFAULT_POLAROIDS: PolaroidPhoto[] = [
     description: "When you first gifted me a heartfelt letter created as a website on Valentine's Day! And apart from that, Project Ohana featuring Stitch and Mowgli is our absolute best project. Your coding is filled with so much love, warmth, and magic!",
   },
   {
-    id: '4',
-    title: "Mom's Food Stall & Handmade Momos",
-    imagePlaceholder: 'bg-gradient-to-tr from-yellow-400 via-amber-500 to-orange-500',
-    imageUrl: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80',
-    emoji: '🥟',
-    date: 'Started This Year',
-    category: 'Family',
-    description: "Mom's food stall started this year, which is such a wonderful blessing that happened to us! Thank you so much for bringing momos for me from the food stall—they are the best momos ever because you made them with your own hands! ❤️",
-  },
-  {
     id: '5',
     title: 'Career Switch & Engineering Milestone',
     imagePlaceholder: 'bg-gradient-to-tr from-emerald-400 via-teal-500 to-cyan-600',

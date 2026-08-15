@@ -12,6 +12,10 @@ import InteractivePhotoFrame from './InteractivePhotoFrame';
 import Guestbook from './Guestbook';
 // @ts-ignore
 import livingRoomSofa from '../assets/images/living_room_sofa_1784441684930.jpg';
+// @ts-ignore
+import balloonImg1 from '../assets/images/memories/IMG_1594.jpg';
+// @ts-ignore
+import balloonImg2 from '../assets/images/memories/IMG_20260719_135348_707.jpg';
 
 export interface BalloonMemory {
   id: number;
@@ -23,8 +27,7 @@ export interface BalloonMemory {
 }
 
 // ==========================================
-// 🎈 BALLOON SURPRISE IMAGES (DUMMY IMAGES)
-// Provide a place to add images: you can replace these dummy image URLs with your real photos!
+// 🎈 BALLOON SURPRISE IMAGES
 // You can also use the in-app "✏️ Change Image" button when the balloons pop!
 // ==========================================
 export const DEFAULT_BALLOON_MEMORIES: BalloonMemory[] = [
@@ -32,25 +35,17 @@ export const DEFAULT_BALLOON_MEMORIES: BalloonMemory[] = [
     id: 1,
     title: "Happy Birthday Yash! 🎉",
     caption: "Wishing you a birthday filled with joy, warmth, and endless happiness!",
-    imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80", // Dummy celebration photo
+    imageUrl: balloonImg1,
     color: "from-[#BDA6CE] via-[#9B8EC7] to-[#211c34]",
     badge: "🎈 Memory #1",
   },
   {
     id: 2,
-    title: "First Restaurant: Shawarmaji 🌯❤️",
-    caption: "Our first restaurant together having shawarma from Shawarmaji! Sitting together, clicking pictures of us, talking, giggling, sharing the first bite, and you wiping my mouth.",
-    imageUrl: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80", // Cozy dining memory photo
-    color: "from-amber-400 via-orange-500 to-rose-700",
-    badge: "🎈 Memory #2",
-  },
-  {
-    id: 3,
     title: "Endless Adventures 🚀🌟",
     caption: "Here is to another year of awesome engineering, coding, and melodies!",
-    imageUrl: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80", // Dummy balloon/party photo
+    imageUrl: balloonImg2,
     color: "from-[#B4D2D9] via-[#6ba8b8] to-[#1e3c48]",
-    badge: "🎈 Memory #3",
+    badge: "🎈 Memory #2",
   },
 ];
 
