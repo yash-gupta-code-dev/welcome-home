@@ -297,27 +297,27 @@ export default function RoomKitchen({
           {/* 2. PHOTO FRAMES & ART ON WALL (Interactive memories for Yash) */}
           <div className="absolute top-32 inset-x-12 flex justify-center gap-12 pointer-events-auto">
             <InteractivePhotoFrame
-              id="kitchen-disaster"
-              emoji="🍰"
-              title="The Baking Disasters"
-              description="That time we tried to bake a soufflé and it completely collapsed into a sweet, gooey pancake. We laughed so hard our stomachs hurt, and we ended up eating it straight off the baking sheet anyway!"
-              date="December 2025"
+              id="kitchen-shawarmaji"
+              emoji="🌯"
+              title="First Restaurant: Shawarmaji"
+              description="Our very first restaurant together having shawarma from Shawarmaji! Sitting together, clicking pictures of us, talking, giggling, sharing the first bite, and you wiping my mouth so sweetly."
+              date="First Restaurant Date"
               positionClasses="relative"
               rotation="-rotate-3"
               frameStyle="wood"
-              caption="Soufflé"
+              caption="Shawarmaji"
             />
 
             <InteractivePhotoFrame
-              id="kitchen-chats"
-              emoji="🍵"
-              title="Warm Kitchen Chats"
-              description="Late-night hot chocolate conversations at the kitchen island, talking about coding frameworks, music theory, and our future plans. Food is great, but the company is what makes it a home."
-              date="Autumn 2025"
+              id="kitchen-momos"
+              emoji="🥟"
+              title="Mom's Food Stall & Momos"
+              description="Mom's food stall started this year, which is such a proud milestone and blessing for our family! And thank you so much for bringing those delicious momos for me from the stall—they are the best momos ever because you made them with your own hands! ❤️"
+              date="Started This Year"
               positionClasses="relative"
               rotation="rotate-2"
               frameStyle="gold"
-              caption="Warm Chats"
+              caption="Momos"
             />
 
             <InteractivePhotoFrame

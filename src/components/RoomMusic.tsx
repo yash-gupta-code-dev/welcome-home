@@ -18,10 +18,10 @@ interface RoomMusicProps {
 
 const KEYS: MusicKey[] = [
   { note: 'C4', frequency: 261.63, keyboardKey: 'A', memory: 'That late-night karaoke session until 3 AM when we both lost our voices singing our favorite love songs.', color: 'white' },
-  { note: 'C#4', frequency: 277.18, keyboardKey: 'W', memory: 'The absolute funniest piano duet we tried to play during our first cozy holiday dinner together.', color: 'black' },
-  { note: 'D4', frequency: 293.66, keyboardKey: 'S', memory: 'Silly road trip duets, screaming rock songs out of tune with the windows down, holding your hand.', color: 'white' },
+  { note: 'C#4', frequency: 277.18, keyboardKey: 'W', memory: 'Our first restaurant together eating shawarma at Shawarmaji! Sitting together, clicking pictures, giggling, sharing the first bite, and you wiping my mouth so sweetly.', color: 'black' },
+  { note: 'D4', frequency: 293.66, keyboardKey: 'S', memory: 'Our first night out together at Marine Lines and visiting Siddhivinayak Temple for holy blessings! Walking, talking, and enjoying the cool ocean breeze.', color: 'white' },
   { note: 'D#4', frequency: 311.13, keyboardKey: 'E', memory: 'Sharing headphones on cold train rides, listening to your favorite acoustic tracks while looking out at the foggy mountains.', color: 'black' },
-  { note: 'E4', frequency: 329.63, keyboardKey: 'D', memory: 'Your very first music gig, where I stood in the front row cheering like a maniac, holding up a silly handmade poster!', color: 'white' },
+  { note: 'E4', frequency: 329.63, keyboardKey: 'D', memory: 'Your Valentine website gift for me, and Project Ohana with Stitch & Mowgli! You code with so much love and imagination.', color: 'white' },
   { note: 'F4', frequency: 349.23, keyboardKey: 'F', memory: 'The custom lofi coding playlist you curated for me during my busy work weeks.', color: 'white' },
   { note: 'F#4', frequency: 369.99, keyboardKey: 'T', memory: 'Listening to classic vinyl records on the living room rug during rainy autumn Sundays wrapped in a warm blanket.', color: 'black' },
   { note: 'G4', frequency: 392.00, keyboardKey: 'G', memory: 'Teaching me how to play that simple three-chord melody on your keyboard while wrapping your hands over mine.', color: 'white' },

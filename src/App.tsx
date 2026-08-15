@@ -539,16 +539,16 @@ export default function App() {
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-3xl p-2 bg-sky-100/60 rounded-xl">📷</span>
                       <span className="px-2.5 py-0.5 bg-sky-100 border border-sky-200 rounded-full text-[10px] font-bold text-sky-600">
-                        Explore Stories
+                        Memories & Uploads
                       </span>
                     </div>
-                    <h3 className="font-display font-bold text-lg text-sky-950 group-hover:text-sky-700 transition">Photo Gallery</h3>
+                    <h3 className="font-display font-bold text-lg text-sky-950 group-hover:text-sky-700 transition">Photo Gallery & Album</h3>
                     <p className="text-sky-900/80 text-xs mt-1.5 leading-relaxed">
-                      Flip adorable Polaroid photos hanging on strings to reveal highly detailed, heartwarming backstories.
+                      Upload and view all your favorite photos (20+ images supported!), flip polaroid memory cards, or enjoy a full-screen romantic slideshow.
                     </p>
                   </div>
                   <div className="text-[10px] text-sky-600/75 font-mono mt-4 border-t border-sky-200/50 pt-2 flex justify-between items-center">
-                    <span>No Clues hidden</span>
+                    <span>Add & View Photos</span>
                     <span>📍 East Hall</span>
                   </div>
                 </motion.div>

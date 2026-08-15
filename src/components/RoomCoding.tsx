@@ -40,22 +40,64 @@ echo "Hugs deployed. Love level: INFINITE."
 `,
   },
   {
+    name: 'project_ohana.ts',
+    language: 'typescript',
+    content: `// 🌺 PROJECT OHANA: Stitch & Mowgli Edition 🐾
+interface OhanaFamily {
+  characters: string[];
+  motto: string;
+  creator: string;
+  rating: string;
+}
+
+const ProjectOhana: OhanaFamily = {
+  characters: ["Stitch 🌺", "Mowgli 🐺", "Yash ❤️", "Rashi 💖"],
+  motto: "Ohana means family. Family means nobody gets left behind or forgotten.",
+  creator: "Yash (Best Engineer Ever)",
+  rating: "100/10 - The Absolute Best Project Ever!"
+};
+
+console.log("✨ Initializing Project Ohana...");
+console.log(\`🐾 Core Crew: \${ProjectOhana.characters.join(', ')}\`);
+console.log(\`🌺 Motto: "\${ProjectOhana.motto}"\`);
+console.log("Status: Legendary Project running forever in our hearts!");
+`,
+  },
+  {
+    name: 'valentine_letter.html',
+    language: 'html',
+    content: `<!-- 💌 Yash's First Website Gift for Rashi -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Valentine's Love Letter</title>
+</head>
+<body style="font-family: serif; background: #fffdfa; color: #2d1b36;">
+  <h1>To My Forever Valentine, Rashi ❤️</h1>
+  <p>Every single line of this code was typed thinking of you.</p>
+  <p>You make every day feel like a celebration. Happy Valentine's Day!</p>
+  <footer>From Yash With All My Heart ✨</footer>
+</body>
+</html>
+`,
+  },
+  {
     name: 'wish_compiler.js',
     language: 'javascript',
     content: `// Rashi's Wish Compiler 2026
-const Boyfriend = {
+const Engineer = {
   name: "Yash",
-  role: "Legendary Engineer & Musician",
-  attributes: ["Creative", "Brilliant", "Unstoppable"]
+  milestone: "Brave Career Switch & Hard-Earned Stability 🚀",
+  future: "Limitless Growth & Brilliance"
 };
 
 function compileWishes() {
-  console.log("Compiling warm wishes for Yash...");
+  console.log("Compiling warm wishes for Yash's Birthday & Career...");
   const wishes = [
-    "May your code compile on the first attempt.",
-    "May your bugs always be minor typo fixes.",
-    "May your coffee be hot and your servers cool.",
-    "Wishing you limitless joy, peace, and coding breakthroughs!"
+    "Congratulations on your career switch and achieving stability!",
+    "Wishing you a thriving career that keeps growing every single day.",
+    "May your code compile on the first attempt and servers stay cool.",
+    "Limitless joy, prosperity, and breakthroughs in all your endeavors!"
   ];
   
   wishes.forEach((wish, i) => {
@@ -71,46 +113,27 @@ compileWishes();
   {
     name: 'secrets_exposed.py',
     language: 'python',
-    content: `# Yash's Childhood Memory Leak Scraper
+    content: `# Yash & Rashi's Memory Database Scraper
 import time
 
-class MemoryLeakScraper:
+class MemoryScraper:
     def __init__(self):
-        self.secrets = [
-            "Sneaking an extra plate of food from mom's food stall when she wasn't looking.",
-            "Sneaking under the blankets with a flashlight to play retro games till 3 AM.",
-            "Your secret superpower: finding the exact line of bug I couldn't see in 4 hours.",
-            "I've always looked up to your persistence. You're an incredible inspiration."
+        self.memories = [
+            "First Night Out: Strolling by Marine Lines & sacred blessings at Siddhivinayak Temple.",
+            "Valentine's Day: Gifting me that incredible love letter made entirely as a website.",
+            "Project Ohana: Stitch & Mowgli — our all-time favorite coding project!",
+            "Mom's Food Stall: Started this year, bringing the world's best handmade momos.",
+            "Career Switch: So proud of your courage and stability. Always keep growing!"
         ]
 
     def scrape_memories(self):
         print("Decrypting memory database...")
-        for idx, secret in enumerate(self.secrets):
-            print(f"[SECT-{idx+1}] Decrypting: {secret}")
-            time.sleep(0.3)
-        print("Scrape complete. Yash status: certified BEST BOYFRIEND ❤️")
+        for idx, memory in enumerate(self.memories):
+            print(f"[MEMORY-{idx+1}] Decrypted: {memory}")
+            time.sleep(0.2)
+        print("Scrape complete. Yash status: Certified BEST BOYFRIEND & ENGINEER ❤️")
 
-MemoryLeakScraper().scrape_memories()
-`,
-  },
-  {
-    name: 'package.json',
-    language: 'json',
-    content: `{
-  "name": "yash-birthday-engine",
-  "version": "12.9.2026",
-  "description": "An interactive framework of pure love and code",
-  "main": "wish_compiler.js",
-  "scripts": {
-    "start": "node wish_compiler.js",
-    "test": "echo \\"Error: Our connection cannot be tested\\" && exit 0"
-  },
-  "dependencies": {
-    "hugs": "^99.9.9",
-    "coffee": "^10.0.0",
-    "memories": "latest"
-  }
-}
+MemoryScraper().scrape_memories()
 `,
   },
 ];
@@ -226,15 +249,33 @@ export default function RoomCoding({ onBackToMap, onClueFound, isClueFound }: Ro
           'Deploying hugs...',
           'Hugs deployed. Love level: INFINITE.'
         );
+      } else if (file.name === 'project_ohana.ts') {
+        audioEngine.playChime();
+        outputs.push(
+          '✨ Executing Project Ohana (Stitch & Mowgli Edition)...',
+          '🐾 Stitch: "Ohana means family."',
+          '🐺 Mowgli: "Family means nobody gets left behind or forgotten."',
+          '🌺 Creator: Yash (Best Engineer Ever)',
+          '❤️ Rating: 100/10 - The Absolute Best Project Ever!'
+        );
+      } else if (file.name === 'valentine_letter.html') {
+        audioEngine.playSparkle();
+        outputs.push(
+          '💌 Rendering Yash\'s Valentine Love Letter Website...',
+          '❤️ [HEADING] To My Forever Valentine, Rashi',
+          '✨ "Every single line of this code was typed thinking of you."',
+          '🌸 "You make every day feel like a celebration. Happy Valentine\'s Day!"',
+          '💖 [FOOTER] From Yash With All My Heart'
+        );
       } else if (file.name === 'wish_compiler.js') {
         audioEngine.playSparkle();
         onClueFound('coding');
         outputs.push(
-          'Compiling warm wishes for Yash...',
-          '[COMPILING WISH 1/4] May your code compile on the first attempt. ... [OK]',
-          '[COMPILING WISH 2/4] May your bugs always be minor typo fixes. ... [OK]',
-          '[COMPILING WISH 3/4] May your coffee be hot and your servers cool. ... [OK]',
-          '[COMPILING WISH 4/4] Wishing you limitless joy, peace, and breakthroughs! ... [OK]',
+          'Compiling warm wishes for Yash\'s Birthday & Career...',
+          '[COMPILING WISH 1/4] Congratulations on your career switch & hard-earned stability! ... [OK]',
+          '[COMPILING WISH 2/4] Wishing you an even brighter career—always keep growing! ... [OK]',
+          '[COMPILING WISH 3/4] May your code compile on the first attempt and servers stay cool. ... [OK]',
+          '[COMPILING WISH 4/4] Limitless joy, peace, and breakthroughs in all you do! ... [OK]',
           '',
           '✨ STACK OVERFLOW REVEAL: Magic Attic safe clue digit is: "0"'
         );
@@ -242,23 +283,16 @@ export default function RoomCoding({ onBackToMap, onClueFound, isClueFound }: Ro
         audioEngine.playNote(300, 'square', 0.25);
         outputs.push(
           'Decrypting memory database...',
-          "[SECT-1] Decrypting: Sneaking an extra plate of food from mom's food stall when she wasn't looking.",
-          '[SECT-2] Decrypting: Sneaking under the blankets with a flashlight to play retro games till 3 AM.',
-          "[SECT-3] Decrypting: Your secret superpower: finding the exact line of bug I couldn't see in 4 hours.",
-          "[SECT-4] Decrypting: I've always looked up to your persistence. You're an incredible inspiration.",
-          'Scrape complete. Yash status: certified BEST BOYFRIEND ❤️'
+          '[MEMORY-1] Decrypted: First Night Out: Strolling by Marine Lines & sacred blessings at Siddhivinayak Temple.',
+          '[MEMORY-2] Decrypted: Valentine\'s Day: Gifting me that incredible love letter made entirely as a website.',
+          '[MEMORY-3] Decrypted: Project Ohana: Stitch & Mowgli — our all-time favorite coding project!',
+          '[MEMORY-4] Decrypted: Mom\'s Food Stall: Started this year, bringing the world\'s best handmade momos.',
+          '[MEMORY-5] Decrypted: Career Switch: So proud of your courage and stability. Always keep growing!',
+          'Scrape complete. Yash status: Certified BEST BOYFRIEND & ENGINEER ❤️'
         );
       } else {
         outputs.push(
-          '{',
-          '  "name": "yash-birthday-engine",',
-          '  "version": "12.9.2026",',
-          '  "dependencies": {',
-          '    "hugs": "^99.9.9",',
-          '    "coffee": "^10.0.0",',
-          '    "memories": "latest"',
-          '  }',
-          '}'
+          'Code file loaded into environment.'
         );
       }
 
@@ -310,27 +344,27 @@ export default function RoomCoding({ onBackToMap, onClueFound, isClueFound }: Ro
           {/* 2. PROGRAMMING WALL ART & PHOTO FRAMES (Interactive memories for Yash) */}
           <div className="absolute top-6 right-12 flex gap-6 pointer-events-auto">
             <InteractivePhotoFrame
-              id="coding-sunrise"
-              emoji="💻"
-              title="Debugging Till Sunrise"
-              description="When we spent 8 hours hunting down a single missing semicolon. You refused to sleep until it was fixed, and when the terminal finally went green, you did a victory dance around the room."
-              date="March 2025"
+              id="coding-valentine"
+              emoji="💌"
+              title="Valentine Website Gift"
+              description="When you first gifted me a romantic love letter crafted entirely as a website on Valentine's Day! It was the most heartwarming, creative gift ever and made my heart flutter."
+              date="Valentine's Day"
               positionClasses="relative"
               rotation="rotate-2"
               frameStyle="charcoal"
-              caption="Sunrise"
+              caption="Valentine Web"
             />
 
             <InteractivePhotoFrame
-              id="coding-arcade"
-              emoji="🕹️"
-              title="Retro Highscores"
-              description="That legendary session where you smashed the highscore on our favorite classic arcade emulator. Your focus is legendary, whether it's programming or conquering virtual worlds!"
-              date="January 2025"
+              id="coding-ohana"
+              emoji="🌺"
+              title="Project Ohana (Stitch & Mowgli)"
+              description="Project Ohana with Stitch and Mowgli is our absolute favorite project! 'Ohana means family, and family means nobody gets left behind or forgotten.' You bring so much soul and love to your code!"
+              date="Project Ohana"
               positionClasses="relative"
               rotation="-rotate-3"
               frameStyle="gold"
-              caption="Highscore"
+              caption="Ohana & Stitch"
             />
           </div>
 

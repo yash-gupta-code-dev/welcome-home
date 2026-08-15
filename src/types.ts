@@ -50,10 +50,12 @@ export interface GuestbookEntry {
 export interface PolaroidPhoto {
   id: string;
   title: string;
-  imagePlaceholder: string; // CSS style or color accent for the mock photo
+  imagePlaceholder?: string; // CSS style or color accent for the mock photo
+  imageUrl?: string;        // Real image source (data URL, uploaded file, or web URL)
   description: string;
   date: string;
   emoji: string;
+  category?: string;
 }
 
 export interface CodeFile {

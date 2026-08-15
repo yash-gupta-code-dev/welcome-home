@@ -38,11 +38,19 @@ export const DEFAULT_BALLOON_MEMORIES: BalloonMemory[] = [
   },
   {
     id: 2,
+    title: "First Restaurant: Shawarmaji 🌯❤️",
+    caption: "Our first restaurant together having shawarma from Shawarmaji! Sitting together, clicking pictures of us, talking, giggling, sharing the first bite, and you wiping my mouth.",
+    imageUrl: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80", // Cozy dining memory photo
+    color: "from-amber-400 via-orange-500 to-rose-700",
+    badge: "🎈 Memory #2",
+  },
+  {
+    id: 3,
     title: "Endless Adventures 🚀🌟",
     caption: "Here is to another year of awesome engineering, coding, and melodies!",
     imageUrl: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80", // Dummy balloon/party photo
     color: "from-[#B4D2D9] via-[#6ba8b8] to-[#1e3c48]",
-    badge: "🎈 Memory #2",
+    badge: "🎈 Memory #3",
   },
 ];
 
@@ -56,7 +64,7 @@ const DEFAULT_GUESTBOOK: GuestbookEntry[] = [
   {
     id: '1',
     name: 'Mom ❤️',
-    message: 'Happy Birthday my wonderful son! Between managing the food stall business and keeping you in my thoughts, my heart is always full of pride. Wishing my brilliant engineer son a year as spectacular as your talents!',
+    message: 'Happy Birthday my wonderful son! Starting our food stall this year has been such a blessing, and seeing you make and bring those delicious momos with your own hands makes my heart melt with pride. Wishing my brilliant engineer son a flourishing, stable career that always keeps growing!',
     timestamp: 'Today, 8:00 AM',
     avatar: '👩‍🍳',
   },
@@ -390,10 +398,10 @@ export default function RoomHall({ onBackToMap, onClueFound, isClueFound }: Room
 
             {/* Bottom Footer Area */}
             <div className="w-full max-w-2xl mx-auto text-center pt-4 border-t border-[#BDA6CE]/30">
-              {poppedBalloons.length < 2 ? (
+              {poppedBalloons.length < balloonMemories.length ? (
                 <div className="flex items-center justify-center gap-2 text-sm font-medium text-[#F2EAE0]/80">
                   <Sparkles className="w-4 h-4 text-[#B4D2D9] animate-spin" />
-                  <span>Popped {poppedBalloons.length} of 2 balloons. Pop both to unlock your special Home greeting!</span>
+                  <span>Popped {poppedBalloons.length} of {balloonMemories.length} balloons. Pop all to unlock your special Home greeting!</span>
                 </div>
               ) : (
                 <motion.div

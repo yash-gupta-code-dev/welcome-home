@@ -17,7 +17,7 @@ const DEFAULT_GUESTBOOK: GuestbookEntry[] = [
   {
     id: '1',
     name: 'Mom ❤️',
-    message: 'Happy Birthday my wonderful son! Between managing the food stall business and keeping you in my thoughts, my heart is always full of pride. Wishing my brilliant engineer son a year as spectacular as your talents!',
+    message: 'Happy Birthday my wonderful son! Starting our food stall this year has been such a blessing, and seeing you make and bring those delicious momos with your own hands makes my heart melt with pride. Wishing my brilliant engineer son a flourishing, stable career that always keeps growing!',
     timestamp: 'Today, 8:00 AM',
     avatar: '👩‍🍳',
   },
