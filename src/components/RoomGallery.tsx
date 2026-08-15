@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef, ChangeEvent, DragEvent, FormEvent, MouseEvent } from 'react';
+import React, { useState, useEffect, useRef, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronLeft,
   RotateCw,
   Camera,
-  Plus,
-  Upload,
   Trash2,
   Edit3,
   Maximize2,
@@ -20,29 +18,17 @@ import {
   Pause,
   ChevronRight,
   X,
-  Sparkles,
   Search,
   Heart,
   ImageIcon,
   RefreshCw,
   Check,
+  Upload,
 } from 'lucide-react';
 import { PolaroidPhoto } from '../types';
 import { audioEngine } from '../lib/AudioEngine';
 
 // Bundled memory photos (Me & Her)
-// @ts-ignore
-import img12 from '../assets/images/memories/12.png';
-// @ts-ignore
-import img13 from '../assets/images/memories/13.png';
-// @ts-ignore
-import img14 from '../assets/images/memories/14.png';
-// @ts-ignore
-import img15 from '../assets/images/memories/15.png';
-// @ts-ignore
-import img16 from '../assets/images/memories/memory_16.png';
-// @ts-ignore
-import img17 from '../assets/images/memories/memory_17.png';
 // @ts-ignore
 import dec032025_a from '../assets/images/memories/1764737978771.jpg';
 // @ts-ignore
@@ -149,60 +135,6 @@ const DEFAULT_POLAROIDS: PolaroidPhoto[] = [
 
 // Real photos bundled from "Me and Her" (edit each card in the gallery to add a personal title & note)
 const CUSTOM_MEMORY_PHOTOS: PolaroidPhoto[] = [
-  {
-    id: 'memory_12',
-    title: 'Memory 12',
-    imageUrl: img12,
-    emoji: '🌯',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
-  {
-    id: 'memory_13',
-    title: 'Memory 13',
-    imageUrl: img13,
-    emoji: '🌊',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
-  {
-    id: 'memory_14',
-    title: 'Memory 14',
-    imageUrl: img14,
-    emoji: '💌',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
-  {
-    id: 'memory_15',
-    title: 'Memory 15',
-    imageUrl: img15,
-    emoji: '🥟',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
-  {
-    id: 'memory_16',
-    title: 'Memory 16',
-    imageUrl: img16,
-    emoji: '🚀',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
-  {
-    id: 'memory_17',
-    title: 'Memory 17',
-    imageUrl: img17,
-    emoji: '📸',
-    date: 'From Our Album',
-    category: 'General',
-    description: 'Captured together with love and cherished forever in our house of memories ❤️',
-  },
   {
     id: 'memory_dec03_1',
     title: 'Dec 03, 2025',
@@ -484,8 +416,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
   const [editingPhoto, setEditingPhoto] = useState<PolaroidPhoto | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [isSlideshowPlaying, setIsSlideshowPlaying] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<string>('');
 
   // Add / Edit form fields
   const [formTitle, setFormTitle] = useState('');
@@ -496,7 +426,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
   const [formImageUrl, setFormImageUrl] = useState('');
   const [uploadedPreview, setUploadedPreview] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const batchFileInputRef = useRef<HTMLInputElement>(null);
 
   // Save to localStorage whenever photos change
   const savePhotos = (updatedPhotos: PolaroidPhoto[]) => {
@@ -526,19 +455,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
       ...prev,
       [id]: !prev[id],
     }));
-  };
-
-  // Open modal to add photo
-  const handleOpenAddModal = () => {
-    setEditingPhoto(null);
-    setFormTitle('');
-    setFormDate(new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
-    setFormDescription('');
-    setFormEmoji('📸');
-    setFormCategory('General');
-    setFormImageUrl('');
-    setUploadedPreview('');
-    setShowAddModal(true);
   };
 
   // Open modal to edit existing photo
@@ -574,43 +490,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
     }
   };
 
-  // Process batch image uploads (e.g. 20 images at once!)
-  const handleBatchFiles = async (files: FileList | File[]) => {
-    const fileArray = Array.from(files).filter((f) => f.type.startsWith('image/'));
-    if (fileArray.length === 0) return;
-
-    audioEngine.playSparkle();
-    setUploadProgress(`Processing ${fileArray.length} photos...`);
-
-    const newEntries: PolaroidPhoto[] = [];
-    for (let i = 0; i < fileArray.length; i++) {
-      const file = fileArray[i];
-      setUploadProgress(`Optimizing photo ${i + 1} of ${fileArray.length}...`);
-      const base64Data = await compressImageFile(file);
-
-      // Clean file name for default title
-      const cleanName = file.name
-        .replace(/\.[^/.]+$/, '')
-        .replace(/[_-]/g, ' ')
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-
-      newEntries.push({
-        id: 'photo_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2, 4),
-        title: cleanName || `Memory #${photos.length + i + 1}`,
-        imageUrl: base64Data,
-        description: 'Captured together with love and cherished forever in our house of memories ❤️',
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        emoji: EMOJI_OPTIONS[i % EMOJI_OPTIONS.length],
-        category: 'General',
-      });
-    }
-
-    const updated = [...newEntries, ...photos];
-    savePhotos(updated);
-    setUploadProgress(`✅ Added ${fileArray.length} new photos!`);
-    setTimeout(() => setUploadProgress(''), 3000);
-  };
-
   // Handle single file upload inside the form
   const handleSingleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -626,24 +505,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
             .replace(/\b\w/g, (c) => c.toUpperCase())
         );
       }
-    }
-  };
-
-  // Drag & drop handlers for main gallery area
-  const handleDragOver = (e: DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = async (e: DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      await handleBatchFiles(e.dataTransfer.files);
     }
   };
 
@@ -706,40 +567,8 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="relative z-10 w-full max-w-6xl mx-auto px-3 sm:px-4 py-4 md:py-6 text-slate-100 flex flex-col min-h-[88vh]"
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
       id="roomGalleryMain"
     >
-      {/* Hidden batch file input for 20+ images upload */}
-      <input
-        type="file"
-        ref={batchFileInputRef}
-        multiple
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => e.target.files && handleBatchFiles(e.target.files)}
-      />
-
-      {/* Drag & Drop Visual Overlay */}
-      <AnimatePresence>
-        {isDragging && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-sky-950/90 border-4 border-dashed border-sky-400 z-50 flex flex-col items-center justify-center pointer-events-none p-6"
-          >
-            <div className="p-6 bg-sky-900/60 rounded-3xl border border-sky-400/50 shadow-2xl flex flex-col items-center gap-3 text-center">
-              <Upload className="w-16 h-16 text-sky-300 animate-bounce" />
-              <h3 className="text-2xl font-bold text-white font-display">Drop Your Photos Here!</h3>
-              <p className="text-sm text-sky-200">
-                Release your images (upload as many as you like) to add them to your memory wall instantly.
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Header & Controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -760,51 +589,7 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
             {photos.length} Photos
           </span>
         </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
-          {/* Quick Batch Upload */}
-          <button
-            onClick={() => batchFileInputRef.current?.click()}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-full text-xs font-semibold shadow-lg hover:shadow-sky-500/25 transition cursor-pointer"
-            title="Select multiple image files at once to upload"
-            id="batchUploadBtn"
-          >
-            <Upload className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Upload Photos</span>
-          </button>
-
-          {/* Add New Single Memory */}
-          <button
-            onClick={handleOpenAddModal}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-400 hover:to-pink-500 text-white rounded-full text-xs font-semibold shadow-lg hover:shadow-rose-500/25 transition cursor-pointer"
-            id="addNewMemoryBtn"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Memory</span>
-          </button>
-        </div>
       </div>
-
-      {/* Upload Notification Banner */}
-      {uploadProgress && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-4 p-3 bg-sky-950/80 border border-sky-500/40 rounded-2xl flex items-center justify-between text-xs text-sky-200 shadow-lg"
-        >
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-sky-400 animate-spin" />
-            <span>{uploadProgress}</span>
-          </div>
-          <button
-            onClick={() => setUploadProgress('')}
-            className="text-sky-400 hover:text-white text-xs cursor-pointer"
-          >
-            Dismiss
-          </button>
-        </motion.div>
-      )}
 
       {/* Main Gallery Frame */}
       <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-4 sm:p-6 md:p-8 backdrop-blur-md flex-grow flex flex-col justify-between relative overflow-hidden shadow-2xl">
@@ -911,12 +696,6 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
                 : 'Start filling this gallery wall by adding your favorite photos together!'}
             </p>
             <div className="flex gap-2">
-              <button
-                onClick={handleOpenAddModal}
-                className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-full shadow cursor-pointer transition"
-              >
-                + Add A Memory
-              </button>
               <button
                 onClick={handleResetDefaults}
                 className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-full border border-slate-700 cursor-pointer transition"
@@ -1161,7 +940,7 @@ export default function RoomGallery({ onBackToMap }: RoomGalleryProps) {
         {/* Footer info note */}
         <div className="z-10 mt-6 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            <span>💡 Tip: Drag & drop your photos anywhere into this room to add them instantly!</span>
+            <span>💡 Tip: Click any card to flip it over and read the memory note.</span>
           </div>
           <button
             onClick={handleResetDefaults}
